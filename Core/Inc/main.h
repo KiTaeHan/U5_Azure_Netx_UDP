@@ -31,12 +31,14 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "stm32u5xx_hal_def.h"
+#include "mx_wifi_conf.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
-
+#define MXCHIP_SPI      hspi2
+void mxchip_WIFI_ISR(uint16_t pin);
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
@@ -46,14 +48,15 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-
+extern void mxchip_WIFI_ISR(uint16_t pin);
+extern void nx_driver_emw3080_interrupt();
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-
+void Success_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
