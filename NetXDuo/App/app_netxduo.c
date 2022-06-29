@@ -38,14 +38,14 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-static VOID App_Main_Thread_Entry(ULONG thread_input);
+static VOID Net_Start_Thread_Entry(ULONG thread_input);
 static VOID App_UDP_Thread_Entry(ULONG thread_input);
 static VOID ip_address_change_notify_callback(NX_IP *ip_instance, VOID *ptr);
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-TX_THREAD AppMainThread;
+TX_THREAD NetStartThread;
 TX_THREAD AppUDPThread;
 
 TX_SEMAPHORE Semaphore;
@@ -144,7 +144,7 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
   }  
   
   /* Create the main thread */
-  ret = tx_thread_create(&AppMainThread, "App Main thread", App_Main_Thread_Entry, 0, pointer, 2 * DEFAULT_MEMORY_SIZE,
+  ret = tx_thread_create(&NetStartThread, "Net Start thread", Net_Start_Thread_Entry, 0, pointer, 2 * DEFAULT_MEMORY_SIZE,
                          DEFAULT_PRIORITY, DEFAULT_PRIORITY, TX_NO_TIME_SLICE, TX_AUTO_START);
   
   if (ret != TX_SUCCESS)
@@ -201,7 +201,7 @@ static VOID ip_address_change_notify_callback(NX_IP *ip_instance, VOID *ptr)
 * @param thread_input: ULONG user argument used by the thread entry
 * @retval none
 */
-static VOID App_Main_Thread_Entry(ULONG thread_input)
+static VOID Net_Start_Thread_Entry(ULONG thread_input)
 {
   UINT ret;
   
